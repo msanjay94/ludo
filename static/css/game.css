@@ -1,0 +1,169 @@
+div {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.p1-fcolor {
+    color: red;
+}
+
+.p2-fcolor {
+    color: #01f301;
+}
+
+.p3-fcolor {
+    color: #ffbe00;
+}
+
+.p4-fcolor {
+    color: #2f9dfb;
+}
+
+.p1-color {
+    background-color: red;
+}
+
+.p2-color {
+    background-color: #01f301;
+}
+
+.p3-color {
+    background-color: #ffbe00;
+}
+
+.p4-color {
+    background-color: #2f9dfb;
+}
+
+.pw-row {
+    width: 100%;
+    height: 16.66%;
+    display: flex;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.pw-col {
+    height: 100%;
+    width: 16.66%;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pw-col .pw-box {
+    width: 100%;
+    height: 33.33%;
+}
+
+.pw-row .pw-box {
+    height: 100%;
+    width: 33.33%;
+}
+
+#outer {
+    width: 600px;
+    height: 600px;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.arrow {
+    width: 100%;
+    text-align: center;
+    margin-top: 25%;
+}
+
+.star {
+    width: 100%;
+    margin-top: 5%;
+    margin-left: 7%;
+    font-size: 2.5em;
+}
+
+.br-l {
+    border-left: 1px solid black;
+}
+
+.br-r {
+    border-right: 1px solid black;
+}
+
+.br-t {
+    border-top: 1px solid black;
+}
+
+.br-b {
+    border-bottom: 1px solid black;
+}
+
+.playerbase {
+    height: 100%;
+    width: 40%;
+}
+
+.players-row {
+    height: 50%;
+    width: 100%;
+    display: flex;
+}
+
+.player {
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.players-grid {
+    width: 50%;
+    height: 100%;
+    padding: 10%;
+}
+
+.dummy10 {
+    height: 15%;
+}
+
+.playerbase-inner {
+    width: 70%;
+    height: 70%;
+    border: 1px solid black;
+    margin: auto;
+    z-index: 1;
+    background-color: white;
+}
+
+#home {
+    width: 20%;
+    height: 100%;
+}
+
+.pathway-vertical {
+    height: 100%;
+    width: 20%;
+}
+
+.pathway-horizontal {
+    height: 100%;
+    width: 40%;
+    display: flex;
+}
+
+#top {
+    width: 100%;
+    height: 40%;
+    display: flex;
+}
+
+#middle {
+    width: 100%;
+    height: 20%;
+    display: flex;
+}
+
+#bottom {
+    width: 100%;
+    height: 40%;
+    display: flex;
+}

@@ -1,0 +1,291 @@
+<html>
+
+<head>
+    <title>
+        Classic Ludo
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/game.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+</head>
+
+<body>
+    <div id="outer">
+        <div id="top" class="border-black">
+            <div class="playerbase p2-color playerbase-left border-black">
+                <div class="dummy10"></div>
+                <div class="playerbase-inner">
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-tl">
+                            <div class="player p2-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-tr">
+                            <div class="player p2-color"></div>
+                        </div>
+                    </div>
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-bl">
+                            <div class="player p2-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-br">
+                            <div class="player p2-color"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dummy10"></div>
+            </div>
+            <div class="pathway-vertical border-black">
+
+            </div>
+            <div class="playerbase p3-color playerbase-right border-black">
+                <div class="dummy10"></div>
+                <div class="playerbase-inner">
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-tl">
+                            <div class="player p3-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-tr">
+                            <div class="player p3-color"></div>
+                        </div>
+                    </div>
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-bl">
+                            <div class="player p3-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-br">
+                            <div class="player p3-color"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dummy10"></div>
+            </div>
+        </div>
+        <div id="middle" class="border-black">
+            <div class="pathway-horizontal">
+
+            </div>
+            <div id="home">
+
+            </div>
+            <div class="pathway-horizontal">
+
+            </div>
+        </div>
+        <div id="bottom" class="border-black">
+            <div class="playerbase p1-color playerbase-left border-black">
+                <div class="dummy10"></div>
+                <div class="playerbase-inner">
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-tl">
+                            <div class="player p1-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-tr">
+                            <div class="player p1-color"></div>
+                        </div>
+                    </div>
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-bl">
+                            <div class="player p1-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-br">
+                            <div class="player p1-color"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dummy10"></div>
+            </div>
+            <div class="pathway-vertical border-black">
+
+            </div>
+            <div class="playerbase p4-color playerbase-right border-black">
+                <div class="dummy10"></div>
+                <div class="playerbase-inner">
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-tl">
+                            <div class="player p4-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-tr">
+                            <div class="player p4-color"></div>
+                        </div>
+                    </div>
+                    <div class="players-row">
+                        <div class="players-grid" id="pl-bl">
+                            <div class="player p4-color"></div>
+                        </div>
+                        <div class="players-grid" id="pl-br">
+                            <div class="player p4-color"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dummy10"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    const p1Color = "red";
+    const p2Color = "#01f301";
+    const p3Color = "#ffbe00";
+    const p4Color = "#2f9dfb";
+
+    $(document).ready(function() {
+        var topPathway = $("#top .pathway-vertical");
+        var bottomPathway = $("#bottom .pathway-vertical");
+        var leftPathway = $("#middle .pathway-horizontal")[0];
+        var rightPathway = $("#middle .pathway-horizontal")[1];
+
+        setVerticalPathway(topPathway, 'p3-color', true);
+        setVerticalPathway(bottomPathway, 'p1-color', false);
+        setHorizontalPathway(leftPathway, 'p2-color', true);
+        setHorizontalPathway(rightPathway, 'p4-color', false);
+
+        setHomeDiv();
+    });
+
+    function setHomeDiv() {
+        var height = $("#home").outerHeight() / 2;
+        height += "px";
+        $("#home").css({
+            'border-top': height + ' solid ' + p3Color,
+            'border-bottom': height + ' solid ' + p1Color,
+            'border-left': height + ' solid ' + p2Color,
+            'border-right': height + ' solid ' + p4Color,
+        });
+    }
+
+    function setVerticalPathway(element, bgClass, top) {
+        var div = "",
+            bgm = "",
+            bgr = "",
+            bgl = "";
+        var bl = "",
+            bt = "",
+            bb = "",
+            br = " br-r";
+        var arrow = "";
+        var starl = "",
+            starr = "";
+        for (var i = 0; i < 6; i++) {
+            if (top) {
+                if (i == 0) {
+                    arrow = "<span class='glyphicon glyphicon-arrow-down arrow p3-fcolor'></span>";
+                } else {
+                    arrow = "";
+                }
+                if (i == 2) {
+                    starl = "<span class='glyphicon glyphicon-star-empty star'></span>";
+                } else {
+                    starl = "";
+                }
+                if (i != 0) {
+                    bgm = " " + bgClass;
+                }
+                if (i == 1) {
+                    bgr = " " + bgClass;
+                } else {
+                    bgr = "";
+                }
+                bb = " br-b";
+            } else {
+                if (i == 5) {
+                    arrow = "<span class='glyphicon glyphicon-arrow-up p1-fcolor arrow'></span>";
+                }
+                if (i == 3) {
+                    starr = "<span class='glyphicon glyphicon-star-empty star'></span>";
+                } else {
+                    starr = "";
+                }
+                if (i != 5) {
+                    bgm = " " + bgClass;
+                } else {
+                    bgm = "";
+                }
+                if (i == 4) {
+                    bgl = " " + bgClass;
+                } else {
+                    bgl = "";
+                }
+                bt = " br-t";
+            }
+            div += "<div class='pw-row'>\
+                        <div class='pw-box" + bgl + bt + br + bb + "'>" + starl + "</div>\
+                        <div class='pw-box" + bgm + bt + br + bb + "'>" + arrow + "</div>\
+                        <div class='pw-box" + bgr + bt + bb + "'>" + starr + "</div>\
+                    </div>";
+        }
+        $(element).html(div);
+    }
+
+    function setHorizontalPathway(element, bgClass, left) {
+        var div = "",
+            bgm = "",
+            bgt = "",
+            bgb = "";
+        var bl = "",
+            br = "",
+            bt = "",
+            bb = " br-b";
+        var arrow = "";
+        var start = "",
+            starb = "";
+        for (var i = 0; i < 6; i++) {
+            if (left) {
+                if (i == 0) {
+                    arrow = "<span class='glyphicon glyphicon-arrow-right p2-fcolor arrow'></span>";
+                } else {
+                    arrow = "";
+                }
+                if (i == 2) {
+                    starb = "<span class='glyphicon glyphicon-star-empty star'></span>";
+                } else {
+                    starb = "";
+                }
+                if (i != 0) {
+                    bgm = " " + bgClass;
+                }
+                if (i == 1) {
+                    bgt = " " + bgClass;
+                } else {
+                    bgt = "";
+                }
+                if (i == 0) {
+                    arrowClass = " arrow";
+                }
+                br = " br-r";
+            } else {
+                if (i == 5) {
+                    arrow = "<span class='glyphicon glyphicon-arrow-left p4-fcolor arrow'></span>";
+                }
+                if (i == 3) {
+                    start = "<span class='glyphicon glyphicon-star-empty star'></span>";
+                } else {
+                    start = "";
+                }
+                if (i != 5) {
+                    bgm = " " + bgClass;
+                } else {
+                    bgm = "";
+                }
+                if (i == 4) {
+                    bgb = " " + bgClass;
+                } else {
+                    bgb = "";
+                }
+                if (i == 5) {
+                    arrowClass = " arrow";
+                }
+                bl = " br-l";
+            }
+            div += "<div class='pw-col'>\
+                        <div class='pw-box" + bgt + bl + bb + br + "'>" + start + "</div>\
+                        <div class='pw-box" + bgm + bl + bb + br + "'>" + arrow + "</div>\
+                        <div class='pw-box" + bgb + bl + br + "'>" + starb + "</div>\
+                    </div>";
+        }
+        $(element).html(div);
+    }
+</script>
