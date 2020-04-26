@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <div id="diceTop"></div>
     <div id="outer">
         <div id="top" class="border-black">
             <div id="base-p2" class="playerbase p2-color playerbase-left border-black">
@@ -71,7 +72,10 @@
 
             </div>
             <div id="home">
-
+                <div class="player-home" id="box-p3-h"></div>
+                <div class="player-home" id="box-p2-h"></div>
+                <div class="player-home" id="box-p4-h"></div>
+                <div class="player-home" id="box-p1-h"></div>
             </div>
             <div class="pathway-horizontal">
 
@@ -127,13 +131,26 @@
             </div>
         </div>
     </div>
+    <div id="diceBottom"></div>
 </body>
 
 </html>
 <script>
-    var cblink = false;
+    const MOVE = 0,
+        ROLL = 1,
+        START = 2;
 
+    var cblink = false;
+    var players = [1, 2, 3, 4];
+    var currentPlayer = 1;
+    var kill = false;
+    var diceValue = 0;
     var boxStates = {};
+
+    var state = ROLL;
+
+    var moving = false;
+    var activeCoinIds = [];
 
     $(document).ready(function() {
         showLoading();
@@ -148,8 +165,10 @@
         setHorizontalPathway(rightPathway, 'p4-color', false);
 
         setHomeDiv();
+
         setPlayerIds(function() {
             hideLoading();
+            game();
         });
     });
 </script>

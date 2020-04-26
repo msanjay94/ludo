@@ -61,6 +61,25 @@ div {
     width: 33.33%;
 }
 
+#diceTop {
+    width: 600px;
+    height: 40px;
+    margin: auto;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 2em;
+    transform: rotate(180deg);
+}
+
+#diceBottom {
+    width: 600px;
+    height: 40px;
+    margin: auto;
+    text-align: center;
+    font-size: 2em;
+    border: 1px solid black;
+}
+
 #outer {
     width: 600px;
     height: 600px;

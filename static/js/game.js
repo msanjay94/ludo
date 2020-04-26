@@ -1,4 +1,6 @@
+//Todo : endgame check
 const safeZones = [1, 9, 14, 22, 27, 35, 40, 48];
+const endZones = ["p1-h", "p2-h", "p3-h", "p4-h"];
 const stars = [9, 22, 35, 49];
 const playerHomes = {
     "1": 1,
@@ -94,8 +96,8 @@ function setBoxStateAtSafeZone(box, boxState) {
     boxStates[box] = boxState;
 }
 
-function mergeAtSafeZone(box, p1, p2, p3, p4) {
-    if (safeZones.indexOf(box) == -1) {
+function mergeAtSafeZone(box, p1, p2, p3, p4, callback) {
+    if (safeZones.indexOf(box) == -1 && endZones.indexOf(box) == -1) {
         return;
     }
     if (p1.length > 4 || p2.length > 4 || p3.length > 4 || p4.length > 4) {
@@ -127,6 +129,8 @@ function mergeAtSafeZone(box, p1, p2, p3, p4) {
         var color = pColors["1"];
         if (box == 1) {
             color = "white";
+        } else if (box == "p1-h") {
+            color = "black";
         }
         colors.push({ "id": id, "color": color });
     }
@@ -135,6 +139,8 @@ function mergeAtSafeZone(box, p1, p2, p3, p4) {
         var color = pColors["2"];
         if (box == 14) {
             color = "white";
+        } else if (box == "p2-h") {
+            color = "black";
         }
         colors.push({ "id": id, "color": color });
     }
@@ -143,6 +149,8 @@ function mergeAtSafeZone(box, p1, p2, p3, p4) {
         var color = pColors["3"];
         if (box == 27) {
             color = "white";
+        } else if (box == "p3-h") {
+            color = "black";
         }
         colors.push({ "id": id, "color": color });
     }
@@ -151,6 +159,8 @@ function mergeAtSafeZone(box, p1, p2, p3, p4) {
         var color = pColors["4"];
         if (box == 40) {
             color = "white";
+        } else if (box == "p4-h") {
+            color = "black";
         }
         colors.push({ "id": id, "color": color });
     }
@@ -178,6 +188,9 @@ function mergeAtSafeZone(box, p1, p2, p3, p4) {
     } else {
         $(boxId).html(table);
     }
+    if (callback) {
+        callback();
+    }
 }
 
 function getCoin(color, factor, border) {
@@ -193,11 +206,16 @@ function getCoin(color, factor, border) {
 }
 
 function getNextCurPos(player, curPos, offset) {
+    if (curPos == 'p' + player + '-h') {
+        return -1;
+    }
     switch (player) {
         case 1:
             if (curPos[0] == 'p') {
                 var hId = Number(curPos.split("-")[1][1]);
-                if (hId + offset > 5) {
+                if (hId == 5 && offset == 1) {
+                    return "p1-h";
+                } else if (hId + offset > 6) {
                     return -1;
                 } else {
                     return "p1-h" + (hId + 1);
@@ -212,7 +230,9 @@ function getNextCurPos(player, curPos, offset) {
         case 2:
             if (curPos[0] == 'p') {
                 var hId = Number(curPos.split("-")[1][1]);
-                if (hId + offset > 5) {
+                if (hId + offset == 6) {
+                    return "p2-h";
+                } else if (hId + offset > 6) {
                     return -1;
                 } else {
                     return "p2-h" + (hId + 1);
@@ -230,7 +250,9 @@ function getNextCurPos(player, curPos, offset) {
         case 3:
             if (curPos[0] == 'p') {
                 var hId = Number(curPos.split("-")[1][1]);
-                if (hId + offset > 5) {
+                if (hId + offset == 6) {
+                    return "p3-h";
+                } else if (hId + offset > 6) {
                     return -1;
                 } else {
                     return "p3-h" + (hId + 1);
@@ -248,7 +270,9 @@ function getNextCurPos(player, curPos, offset) {
         case 4:
             if (curPos[0] == 'p') {
                 var hId = Number(curPos.split("-")[1][1]);
-                if (hId + offset > 5) {
+                if (hId + offset == 6) {
+                    return "p4-h";
+                } else if (hId + offset > 6) {
                     return -1;
                 } else {
                     return "p4-h" + (hId + 1);
@@ -266,12 +290,21 @@ function getNextCurPos(player, curPos, offset) {
     }
 }
 
-function moveCoin(player, coinNumber, offset, prevId, html) {
+function moveCoin(player, coinNumber, offset, random, prevId, html, callback) {
+    if (moving) {
+        if (moving != random) {
+            return;
+        }
+    } else {
+        moving = Math.random();
+    }
     if (offset > 6) {
+        moving = false;
         return;
     }
     var coinId = "#p" + player + "c" + coinNumber;
     if (isCoinAtBase(coinId)) {
+        moving = false;
         return;
     }
     var id = $($(coinId).parents('div')[0]).attr('id');
@@ -279,6 +312,7 @@ function moveCoin(player, coinNumber, offset, prevId, html) {
     var oldPos = curPos;
     curPos = getNextCurPos(player, curPos, offset);
     if (curPos == -1) {
+        moving = false;
         return;
     }
     var bstatet = boxStates[oldPos];
@@ -304,13 +338,16 @@ function moveCoin(player, coinNumber, offset, prevId, html) {
 
             var boxId = "#box-" + curPos;
             var boxState = boxStates[curPos] || {};
-            if (safeZones.indexOf(curPos) != -1) {
+            if (safeZones.indexOf(curPos) != -1 || endZones.indexOf(curPos) != -1) {
                 if (offset == 1) {
                     // merge
                     var playersAtBox = boxState[player] || [];
                     playersAtBox.push(coinNumber);
                     boxState[player] = playersAtBox;
                     setBoxStateAtSafeZone(curPos, boxState);
+                    if (callback) {
+                        callback(false);
+                    }
                 } else {
                     // jump
                     if ($(boxId).children().length != 0) {
@@ -331,11 +368,13 @@ function moveCoin(player, coinNumber, offset, prevId, html) {
             } else {
                 if (offset == 1) {
                     // vettu
+                    var kill = false;
                     for (var i = 1; i <= 4; i++) {
                         if (i != player) {
                             var coins = boxState[i] || [];
                             for (var j in coins) {
                                 goHome(i, coins[j], true);
+                                kill = true;
                             }
                         }
                     }
@@ -345,6 +384,9 @@ function moveCoin(player, coinNumber, offset, prevId, html) {
                     mergeCoins(curPos, player, playersAtBox);
                     boxState[player] = playersAtBox;
                     boxStates[curPos] = boxState;
+                    if (callback) {
+                        callback(kill);
+                    }
                 } else {
                     // jump
                     if ($(boxId).children().length != 0 || Object.keys(boxState).length != 0) {
@@ -360,37 +402,35 @@ function moveCoin(player, coinNumber, offset, prevId, html) {
                 }
             }
             $(coinId).animate({ 'opacity': 1 }, 200, function() {
-                moveCoin(player, coinNumber, offset - 1, prevId, html);
+                moveCoin(player, coinNumber, offset - 1, moving, prevId, html, callback);
             });
         });
-    }
-}
-
-function startBlink(objectId, player) {
-    cblink = true;
-    blink(objectId, player);
-}
-
-function blink(objectId, player, color) {
-    var animeSpeed = 200;
-    if (!cblink) {
-        return;
     } else {
-        $(objectId).animate({ 'background-color': pColors[player] });
+        moving = false;
     }
-    if (!color) {
-        color = pDarkColors[player];
-    }
-    if (color == pColors[player]) {
-        animeSpeed = 50;
-    }
-    $(objectId).animate({ 'background-color': color }, animeSpeed, function() {
-        if (color == pColors[player]) {
-            color = pDarkColors[player]
-        } else {
-            color == pColors[player]
+}
+
+function startBlink(objectId, player, blinkColors) {
+    cblink = true;
+    blink(objectId, player, blinkColors);
+}
+
+function blink(objectId, player, colors) {
+    var animeSpeed = 300;
+    if (!cblink) {
+        var defaultColor = pColors[player];
+        if (colors.indexOf("white") != -1) {
+            defaultColor = "white";
         }
-        blink(objectId, player, color);
+        $(objectId).animate({ 'background-color': defaultColor });
+        return;
+    }
+    if (!colors || colors.length == 0) {
+        colors = [pDarkColors[player], pColors[player]];
+    }
+    $(objectId).animate({ 'background-color': colors[0] }, animeSpeed, function() {
+        var newColors = [colors[1], colors[0]];
+        blink(objectId, player, newColors);
     });
 }
 
@@ -403,6 +443,23 @@ function setHomeDiv() {
         'border-left': height + ' solid ' + pColors["2"],
         'border-right': height + ' solid ' + pColors["4"],
     });
+
+    var boxD = Math.ceil($("#box-1").outerHeight());
+    var json = { 'width': boxD + "px", 'height': boxD + "px" };
+    $("#box-p1-h").css(json);
+    $("#box-p2-h").css(json);
+    $("#box-p3-h").css(json);
+    $("#box-p4-h").css(json);
+
+    var homeD = Math.ceil($("#home").outerHeight());
+    var t1 = -1 * Math.ceil(homeD / 2);
+    $("#box-p3-h").css({ 'margin-top': t1 + "px" });
+    $("#box-p2-h").css({ 'margin-left': t1 + "px" });
+    var t2 = -1 * Math.ceil(boxD / 2);
+    $("#box-p4-h").css({ 'margin-left': (-1 * t2) + "px" });
+    $("#box-p4-h").css({ 'margin-top': '-' + boxD + "px" });
+    $("#box-p3-h").css({ 'margin-left': t2 + "px" });
+    $("#box-p1-h").css({ 'margin-left': t2 + "px" });
 }
 
 function setVerticalPathway(element, bgClass, top) {
@@ -595,7 +652,7 @@ function isCoinAtBase(coinId) {
     return false;
 }
 
-function startPlayer(playerNumber, coinNumber) {
+function startPlayer(playerNumber, coinNumber, callback) {
     var coinId = "#p" + playerNumber + "c" + coinNumber;
     if (!isCoinAtBase(coinId)) {
         return;
@@ -608,6 +665,9 @@ function startPlayer(playerNumber, coinNumber) {
         playersAtBox.push(coinNumber);
         boxState[playerNumber] = playersAtBox;
         setBoxStateAtSafeZone(homeBox, boxState);
+        if (callback) {
+            callback();
+        }
     });
 }
 
@@ -707,4 +767,168 @@ function endPlayer(player, coinNumber, prevId, prevHtml) {
         }
     });
 
+}
+
+function isCoinFinished(player, coinNumber) {
+    var coinId = "#p" + player + "c" + coinNumber;
+    return $(coinId).parents('.player-home').length == 1;
+}
+
+function highlightCoins(player, coinIds) {
+    var boxState = boxStates[playerHomes[player]] || {};
+    var t = {};
+    t[1] = [];
+    t[2] = [];
+    t[3] = [];
+    t[4] = [];
+    t[player] = boxState[player] || [];
+    if (t[player].length > 0) {
+        mergeAtSafeZone(playerHomes[player], t[1], t[2], t[3], t[4]);
+    }
+    for (var index in coinIds) {
+        var coinId = coinIds[index];
+        if (isCoinAtBase(coinId)) {
+            $(coinId).css({ 'border': '3px dashed black' }).addClass('loader');
+        } else {
+            coinId = coinId + " div";
+            $(coinId).css({ 'border': '2px dashed black' }).addClass('loader');
+            var boxId = $($(coinId).parents('div')[0]).attr('id');
+            var curPos = boxId.substring(boxId.indexOf("-") + 1);
+            var blinkColors = [pDarkColors[player], pColors[player]];
+            if (curPos == playerHomes[player] || curPos[0] == '0') {
+                blinkColors = [pDarkColors[player], "white"];
+            }
+            startBlink(coinId, player, blinkColors);
+        }
+    }
+}
+
+function noHighlightCoins(player, coinIds, callback) {
+    cblink = false;
+    for (var index in coinIds) {
+        var coinId = coinIds[index];
+        if (isCoinAtBase(coinId)) {
+            $(coinId).css({ 'border': '1px solid black' }).removeClass('loader');
+        } else {
+            coinId = coinId + " div";
+            $(coinId).css({ 'border': '1px solid black' }).removeClass('loader');
+        }
+    }
+    var boxState = boxStates[playerHomes[player]] || {};
+    mergeAtSafeZone(playerHomes[player], boxState[1] || [], boxState[2] || [], boxState[3] || [], boxState[4] || [], callback);
+}
+
+function game() {
+    if (state == ROLL) {
+        rollDice(function(value) {
+            diceValue = value;
+            console.log("Player: " + currentPlayer + ", Dice value: " + diceValue);
+            state = MOVE;
+            game();
+        });
+    } else {
+        var array = [];
+        for (var i = 1; i <= 4; i++) {
+            var coinId = "#p" + currentPlayer + "c" + i;
+            if (isCoinFinished(currentPlayer, i)) {
+                continue;
+            } else if (isCoinAtBase(coinId)) {
+                if (diceValue == 6) {
+                    array.push(coinId);
+                }
+            } else {
+                var boxId = $($(coinId).parents('div')[0]).attr('id');
+                var curPos = boxId.substring(boxId.indexOf("-") + 1);
+                if (curPos[0] == 'p') {
+                    var hId = Number(curPos.split("-")[1][1]);
+                    if (hId + diceValue < 6) {
+                        array.push(coinId);
+                    }
+                } else {
+                    array.push(coinId);
+                }
+            }
+        }
+        if (array.length == 0) {
+            setTimeout(function() {
+                getNextPlayer(function() {
+                    state = ROLL;
+                    game();
+                });
+            }, 991);
+        } else {
+            activeCoinIds = array;
+            startBlink("#base-p" + currentPlayer, currentPlayer);
+            highlightCoins(currentPlayer, array);
+            setOnclicks(currentPlayer, array, diceValue);
+        }
+    }
+}
+
+function setOnclicks(player, coinIds, diceValue) {
+    for (var index in coinIds) {
+        var coinId = coinIds[index];
+        if (!isCoinAtBase(coinId)) {
+            $(coinId).attr('onclick', 'coinStateChange(' + player + ', \'' + coinId + '\', ' + MOVE + ', ' + diceValue + ')');
+        } else {
+            $(coinId).attr('onclick', 'coinStateChange(' + player + ', \'' + coinId + '\', ' + START + ')');
+        }
+    }
+}
+
+function coinStateChange(player, coinId, newState, diceValue) {
+    for (var index in activeCoinIds) {
+        var activeCoinId = activeCoinIds[index];
+        $(activeCoinId).attr('onclick', 'return false');
+    }
+    if (newState == START) {
+        var coinNumber = coinId.split("c")[1];
+        noHighlightCoins(player, activeCoinIds, function() {
+            startPlayer(player, coinNumber, function() {
+                setTimeout(function() {
+                    state = ROLL;
+                    game();
+                }, 991);
+            });
+        });
+    } else if (newState == MOVE) {
+        var coinNumber = coinId.split("c")[1];
+        moveCoin(player, coinNumber, diceValue, null, null, null, function(isKill) {
+            noHighlightCoins(player, activeCoinIds, function() {
+                state = ROLL;
+                if (diceValue == 6 || isKill || isCoinFinished(player, coinNumber)) {
+                    setTimeout(function() {
+                        state = ROLL;
+                        game();
+                    }, 991);
+                } else {
+                    setTimeout(function() {
+                        getNextPlayer(function() {
+                            state = ROLL;
+                            game();
+                        });
+                    }, 991);
+                }
+            });
+        });
+    }
+}
+
+function getNextPlayer(callback) {
+    var currentIndex = players.indexOf(currentPlayer);
+    var nextPlayerIndex = (currentIndex + 1) % players.length;
+    currentPlayer = players[nextPlayerIndex];
+    if (callback) {
+        callback();
+    }
+}
+
+function rollDice(callback) {
+    //TODO from server
+    var value = Math.floor(Math.random() * 10 % 6) + 1;
+    $("#diceTop").html(value);
+    $("#diceBottom").html(value);
+    if (callback) {
+        callback(value);
+    }
 }
