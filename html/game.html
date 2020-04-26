@@ -142,6 +142,7 @@
 
     var cblink = false;
     var players = [1, 2, 3, 4];
+    var playerNames = [];
     var currentPlayer = 1;
     var kill = false;
     var diceValue = 0;
@@ -151,6 +152,17 @@
 
     var moving = false;
     var activeCoinIds = [];
+
+    function startGame(twoplayers, p1, p2, p3, p4) {
+        if (twoplayers) {
+            players = [1, 3];
+            playerNames = [p1, p3, p2, p4];
+        } else {
+            players = [1, 2, 3, 4];
+            playerNames = [p1, p2, p3, p4];
+        }
+        game();
+    }
 
     $(document).ready(function() {
         showLoading();
@@ -168,7 +180,9 @@
 
         setPlayerIds(function() {
             hideLoading();
-            game();
+            setTimeout(function() {
+                openInitDiv(startGame);
+            }, 1000);
         });
     });
 </script>

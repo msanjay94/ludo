@@ -1,4 +1,5 @@
 //Todo : endgame check
+
 const safeZones = [1, 9, 14, 22, 27, 35, 40, 48];
 const endZones = ["p1-h", "p2-h", "p3-h", "p4-h"];
 const stars = [9, 22, 35, 49];
@@ -410,18 +411,14 @@ function moveCoin(player, coinNumber, offset, random, prevId, html, callback) {
     }
 }
 
-function startBlink(objectId, player, blinkColors) {
+function startBlink(objectId, player, blinkColors, defaultColor) {
     cblink = true;
-    blink(objectId, player, blinkColors);
+    blink(objectId, player, blinkColors, defaultColor);
 }
 
-function blink(objectId, player, colors) {
+function blink(objectId, player, colors, defaultColor) {
     var animeSpeed = 300;
     if (!cblink) {
-        var defaultColor = pColors[player];
-        if (colors.indexOf("white") != -1) {
-            defaultColor = "white";
-        }
         $(objectId).animate({ 'background-color': defaultColor });
         return;
     }
@@ -795,10 +792,12 @@ function highlightCoins(player, coinIds) {
             var boxId = $($(coinId).parents('div')[0]).attr('id');
             var curPos = boxId.substring(boxId.indexOf("-") + 1);
             var blinkColors = [pDarkColors[player], pColors[player]];
-            if (curPos == playerHomes[player] || curPos[0] == '0') {
+            var defaultColor = pColors[player];
+            if (curPos == playerHomes[player] || curPos[0] == 'p') {
                 blinkColors = [pDarkColors[player], "white"];
+                defaultColor = "white";
             }
-            startBlink(coinId, player, blinkColors);
+            startBlink(coinId, player, blinkColors, defaultColor);
         }
     }
 }
