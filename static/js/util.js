@@ -76,20 +76,23 @@ function openInitDiv(callback) {
             effect: "clip",
             duration: 300
         },
+        open: function(event, ui) {
+            $(".ui-dialog-titlebar button").css({ "visibility": "hidden" });
+        },
         buttons: {
             "Start": function() {
                 var twoplayers = $($("#init-dialog-form input[type='radio']")[0]).prop('checked');
-                var p1 = $("#init-dialog-form input[type='text'")[0].value;
-                var p2 = $("#init-dialog-form input[type='text'")[1].value;
-                var p3 = $("#init-dialog-form input[type='text'")[2].value;
-                var p4 = $("#init-dialog-form input[type='text'")[3].value;
-                callback(twoplayers, p1, p2, p3, p4);
+                var playersCount = 4;
+                if (twoplayers) {
+                    playersCount = 2;
+                }
+                var p1 = $("#init-dialog-form input[type='text'")[0].value || "Player 1";
+                var p2 = $("#init-dialog-form input[type='text'")[1].value || "Player 2";
+                var p3 = $("#init-dialog-form input[type='text'")[2].value || "Player 3";
+                var p4 = $("#init-dialog-form input[type='text'")[3].value || "Player 4";
+                callback(playersCount, p1, p2, p3, p4);
                 dialog.dialog('close');
             },
-            Cancel: function() {
-                clearFields();
-                dialog.dialog("close");
-            }
         },
         close: function() {
             form[0].reset();

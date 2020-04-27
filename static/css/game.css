@@ -61,29 +61,96 @@ div {
     width: 33.33%;
 }
 
-#diceTop {
-    width: 600px;
-    height: 40px;
-    margin: auto;
-    border: 1px solid black;
-    text-align: center;
-    font-size: 2em;
-    transform: rotate(180deg);
+.dice1 {
+    background-image: url("/static/images/dice1.png");
+    background-size: 100%;
 }
 
-#diceBottom {
+.dice2 {
+    background-image: url("/static/images/dice2.png");
+    background-size: 100%;
+}
+
+.dice3 {
+    background-image: url("/static/images/dice3.png");
+    background-size: 100%;
+}
+
+.dice4 {
+    background-image: url("/static/images/dice4.png");
+    background-size: 100%;
+}
+
+.dice5 {
+    background-image: url("/static/images/dice5.png");
+    background-size: 100%;
+}
+
+.dice6 {
+    background-image: url("/static/images/dice6.png");
+    background-size: 100%;
+}
+
+.dicediv {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.diceDivY {
+    width: 60px;
+    height: 600px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.diceDivX {
     width: 600px;
-    height: 40px;
+    height: 60px;
     margin: auto;
     text-align: center;
     font-size: 2em;
-    border: 1px solid black;
+}
+
+#p1nametxt {
+    width: fit-content;
+    margin-left: 20px;
+    display: inline;
+    float: left;
+}
+
+#p3nametxt {
+    width: fit-content;
+    margin-left: 20px;
+    display: inline;
+    float: left;
+}
+
+#p2nametxt {
+    transform: rotate(90deg);
+    margin-top: 40px;
+    white-space: nowrap;
+    display: inline;
+    float: left;
+    width: 75px;
+}
+
+#p4nametxt {
+    transform: rotate(270deg);
+    margin-top: 540px;
+    white-space: nowrap;
+    display: inline;
+    float: left;
+    width: 40px;
+}
+
+#diceDivP3 {
+    transform: rotate(180deg);
 }
 
 #outer {
     width: 600px;
     height: 600px;
-    margin: auto;
     border: 1px solid black;
 }
 
@@ -188,6 +255,12 @@ div {
     width: 100%;
     height: 40%;
     display: flex;
+}
+
+.dice-spinner {
+    -webkit-animation: spin 1s linear infinite;
+    /* Safari */
+    animation: spin 1s linear infinite;
 }
 
 .loader {

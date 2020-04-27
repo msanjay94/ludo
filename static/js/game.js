@@ -418,6 +418,9 @@ function startBlink(objectId, player, blinkColors, defaultColor) {
 
 function blink(objectId, player, colors, defaultColor) {
     var animeSpeed = 300;
+    if (!defaultColor) {
+        defaultColor = pColors[player];
+    }
     if (!cblink) {
         $(objectId).animate({ 'background-color': defaultColor });
         return;
@@ -821,7 +824,7 @@ function game() {
     if (state == ROLL) {
         rollDice(function(value) {
             diceValue = value;
-            console.log("Player: " + currentPlayer + ", Dice value: " + diceValue);
+            // console.log("Player: " + currentPlayer + ", Dice value: " + diceValue);
             state = MOVE;
             game();
         });
@@ -922,12 +925,52 @@ function getNextPlayer(callback) {
     }
 }
 
+function getRandomDiceValue() {
+    return Math.floor(Math.random() * 10 % 6) + 1;
+}
+
 function rollDice(callback) {
     //TODO from server
-    var value = Math.floor(Math.random() * 10 % 6) + 1;
-    $("#diceTop").html(value);
-    $("#diceBottom").html(value);
-    if (callback) {
-        callback(value);
+    $(".dicediv").each(function(index, element) {
+        $(this).hide();
+        $(this).unbind();
+    });
+    var diceId = "#diceDivP" + currentPlayer + " .dicediv";
+    $(diceId).show();
+    startBlink("#base-p" + currentPlayer, currentPlayer);
+    startDiceBlink(diceId);
+    $(diceId).click(function() {
+        cblink = false;
+        $(diceId).addClass('dice-spinner');
+        setTimeout(function() {
+            // var value = getRandomDiceValue();
+            var value = 1;
+            $(diceId).removeClass('dice-spinner');
+            $(diceId).css({ 'opacity': '0.0' });
+            $(diceId).removeClass('dice1').removeClass('dice2').removeClass('dice3').removeClass('dice4').removeClass('dice4').removeClass('dice6').addClass('dice' + value);
+            $(diceId).css({ 'opacity': '1.0' });
+            if (callback) {
+                callback(value);
+            }
+        }, 1000);
+    });
+}
+
+function startDiceBlink(diceId) {
+    cblink = true;
+    diceBlink(diceId);
+}
+
+function diceBlink(diceId, opacity) {
+    if (!cblink) {
+        $(diceId).css({ 'opacity': '1.0' });
+        return;
     }
+    if (!opacity) {
+        opacity = 0;
+    }
+    $(diceId).animate({ 'opacity': opacity }, 300, function() {
+        opacity = opacity ? 0 : 1;
+        diceBlink(diceId, opacity);
+    });
 }

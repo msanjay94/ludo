@@ -16,122 +16,142 @@
 </head>
 
 <body>
-    <div id="diceTop"></div>
-    <div id="outer">
-        <div id="top" class="border-black">
-            <div id="base-p2" class="playerbase p2-color playerbase-left border-black">
-                <div class="dummy10"></div>
-                <div class="playerbase-inner">
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-tl">
-                            <div class="player p2-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-tr">
-                            <div class="player p2-color"></div>
-                        </div>
-                    </div>
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-bl">
-                            <div class="player p2-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-br">
-                            <div class="player p2-color"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dummy10"></div>
-            </div>
-            <div class="pathway-vertical border-black">
-
-            </div>
-            <div id="base-p3" class="playerbase p3-color playerbase-right border-black">
-                <div class="dummy10"></div>
-                <div class="playerbase-inner">
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-tl">
-                            <div class="player p3-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-tr">
-                            <div class="player p3-color"></div>
-                        </div>
-                    </div>
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-bl">
-                            <div class="player p3-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-br">
-                            <div class="player p3-color"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dummy10"></div>
-            </div>
-        </div>
-        <div id="middle" class="border-black">
-            <div class="pathway-horizontal">
-
-            </div>
-            <div id="home">
-                <div class="player-home" id="box-p3-h"></div>
-                <div class="player-home" id="box-p2-h"></div>
-                <div class="player-home" id="box-p4-h"></div>
-                <div class="player-home" id="box-p1-h"></div>
-            </div>
-            <div class="pathway-horizontal">
-
-            </div>
-        </div>
-        <div id="bottom" class="border-black">
-            <div id="base-p1" class="playerbase p1-color playerbase-left border-black">
-                <div class="dummy10"></div>
-                <div class="playerbase-inner">
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-tl">
-                            <div class="player p1-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-tr">
-                            <div class="player p1-color"></div>
-                        </div>
-                    </div>
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-bl">
-                            <div class="player p1-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-br">
-                            <div class="player p1-color"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dummy10"></div>
-            </div>
-            <div class="pathway-vertical border-black">
-
-            </div>
-            <div id="base-p4" class="playerbase p4-color playerbase-right border-black">
-                <div class="dummy10"></div>
-                <div class="playerbase-inner">
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-tl">
-                            <div class="player p4-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-tr">
-                            <div class="player p4-color"></div>
-                        </div>
-                    </div>
-                    <div class="players-row">
-                        <div class="players-grid" id="pl-bl">
-                            <div class="player p4-color"></div>
-                        </div>
-                        <div class="players-grid" id="pl-br">
-                            <div class="player p4-color"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dummy10"></div>
-            </div>
+    <div class='diceDivX' id="diceDivP3">
+        <div style='width:240px'>
+            <div id="p3nametxt"></div>
+            <div style="display:none; float:right" class="dicediv dice6"></div>
         </div>
     </div>
-    <div id="diceBottom"></div>
+    <div style="margin:auto; width:720px; height:600px; display:flex">
+        <div class='diceDivY' id="diceDivP2">
+            <div id="p2nametxt"></div>
+            <div style="display:none; margin-top:180px" class="dicediv dice6"></div>
+        </div>
+        <div id="outer">
+            <div id="top" class="border-black">
+                <div id="base-p2" class="playerbase p2-color playerbase-left border-black">
+                    <div class="dummy10"></div>
+                    <div class="playerbase-inner">
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-tl">
+                                <div class="player p2-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-tr">
+                                <div class="player p2-color"></div>
+                            </div>
+                        </div>
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-bl">
+                                <div class="player p2-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-br">
+                                <div class="player p2-color"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dummy10"></div>
+                </div>
+                <div class="pathway-vertical border-black">
+
+                </div>
+                <div id="base-p3" class="playerbase p3-color playerbase-right border-black">
+                    <div class="dummy10"></div>
+                    <div class="playerbase-inner">
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-tl">
+                                <div class="player p3-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-tr">
+                                <div class="player p3-color"></div>
+                            </div>
+                        </div>
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-bl">
+                                <div class="player p3-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-br">
+                                <div class="player p3-color"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dummy10"></div>
+                </div>
+            </div>
+            <div id="middle" class="border-black">
+                <div class="pathway-horizontal">
+
+                </div>
+                <div id="home">
+                    <div class="player-home" id="box-p3-h"></div>
+                    <div class="player-home" id="box-p2-h"></div>
+                    <div class="player-home" id="box-p4-h"></div>
+                    <div class="player-home" id="box-p1-h"></div>
+                </div>
+                <div class="pathway-horizontal">
+
+                </div>
+            </div>
+            <div id="bottom" class="border-black">
+                <div id="base-p1" class="playerbase p1-color playerbase-left border-black">
+                    <div class="dummy10"></div>
+                    <div class="playerbase-inner">
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-tl">
+                                <div class="player p1-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-tr">
+                                <div class="player p1-color"></div>
+                            </div>
+                        </div>
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-bl">
+                                <div class="player p1-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-br">
+                                <div class="player p1-color"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dummy10"></div>
+                </div>
+                <div class="pathway-vertical border-black">
+
+                </div>
+                <div id="base-p4" class="playerbase p4-color playerbase-right border-black">
+                    <div class="dummy10"></div>
+                    <div class="playerbase-inner">
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-tl">
+                                <div class="player p4-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-tr">
+                                <div class="player p4-color"></div>
+                            </div>
+                        </div>
+                        <div class="players-row">
+                            <div class="players-grid" id="pl-bl">
+                                <div class="player p4-color"></div>
+                            </div>
+                            <div class="players-grid" id="pl-br">
+                                <div class="player p4-color"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dummy10"></div>
+                </div>
+            </div>
+        </div>
+        <div class='diceDivY' id="diceDivP4">
+            <div id="p4nametxt"></div>
+            <div style="display:none; margin-top:360px" class="dicediv dice6"></div>
+        </div>
+    </div>
+    <div class='diceDivX' id="diceDivP1">
+        <div style='width:240px'>
+            <div id="p1nametxt"></div>
+            <div style="float:right" class="dicediv dice6"></div>
+        </div>
+    </div>
 </body>
 
 </html>
@@ -153,15 +173,32 @@
     var moving = false;
     var activeCoinIds = [];
 
-    function startGame(twoplayers, p1, p2, p3, p4) {
-        if (twoplayers) {
+    function startGame(playerCount, p1, p2, p3, p4) {
+        if (playerCount == 2) {
             players = [1, 3];
-            playerNames = [p1, p3, p2, p4];
+            playerNames = [p1, "", p2, ""];
+        } else if (playerCount == 3) {
+            players = [1, 2, 3];
+            playerNames = [p1, p2, p3, ""];
         } else {
             players = [1, 2, 3, 4];
             playerNames = [p1, p2, p3, p4];
         }
+        setPlayerNames();
         game();
+    }
+
+    function setPlayerNames() {
+        $("#p1nametxt").html(playerNames[0]);
+        $("#p3nametxt").html(playerNames[2]);
+        if (playerNames[1]) {
+            $("#p2nametxt").html(playerNames[1]);
+            $("#diceDivP2").show();
+        }
+        if (playerNames[3]) {
+            $("#p4nametxt").html(playerNames[3]);
+            $("#diceDivP4").show();
+        }
     }
 
     $(document).ready(function() {
