@@ -943,8 +943,7 @@ function rollDice(callback) {
         cblink = false;
         $(diceId).addClass('dice-spinner');
         setTimeout(function() {
-            // var value = getRandomDiceValue();
-            var value = 1;
+            var value = getRandomDiceValue();
             $(diceId).removeClass('dice-spinner');
             $(diceId).css({ 'opacity': '0.0' });
             $(diceId).removeClass('dice1').removeClass('dice2').removeClass('dice3').removeClass('dice4').removeClass('dice4').removeClass('dice6').addClass('dice' + value);
